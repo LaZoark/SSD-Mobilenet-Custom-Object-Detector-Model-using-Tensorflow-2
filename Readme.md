@@ -170,7 +170,7 @@ Download the example model `ssd_mobilenet_v2_320x320_coco17_tpu-8.tar.gz` and ex
 
 ```
 $wget http://download.tensorflow.org/models/object_detection/tf2/20200711/ssd_mobilenet_v2_320x320_coco17_tpu-8.tar.gz
-$tar -xvzf sd_mobilenet_v2_320x320_coco17_tpu-8.tar.gz
+$tar -xvzf ssd_mobilenet_v2_320x320_coco17_tpu-8.tar.gz
 
 ```
 change the pipeline config accordingly. The changes I made in the config file is higlighted in bold
