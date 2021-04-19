@@ -107,7 +107,7 @@ clone tensorflow models repository in the workspace `tensorflow_model` and insta
 
 ```
 $ git clone https://github.com/tensorflow/models.git
-$ cd models/reasearch
+$ cd models/research
 $ protoc object_detection/protos/*.proto --python_out=.
 $ pip install tf_slim
 $ pip install pandas
@@ -125,8 +125,9 @@ cp -r models/research/object_detection   .
 Generate the record file required for pipeline configuration
 
 ```
-$python generate_tfrecord.py --csv_input=data/train_labels.csv --output_path=data/train.record
-$python generate_tfrecord.py --csv_input=data/test_labels.csv --output_path=data/test.record
+python "/home/b0742006/tensorflow_model/generate_tfrecord.py" --csv_input="/home/b0742006/tensorflow_model/data/train_labels.csv" --output_path="/home/b0742006/tensorflow_model/data/train.record"
+
+python "/home/b0742006/tensorflow_model/generate_tfrecord.py" --csv_input="/home/b0742006/tensorflow_model/data/test_labels.csv" --output_path="/home/b0742006/tensorflow_model/data/test.record"
 
 ```
 
