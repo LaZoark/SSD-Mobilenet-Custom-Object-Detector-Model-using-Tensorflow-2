@@ -2,7 +2,7 @@
 
 Here, we will create SSD-MobileNet-V2 model for smart phone deteaction. We are going to use tensorflow-gpu 2.2 for this. I am using python version 3.7.7.
 
-
+https://github.com/tensorflow/addons
 <h2> Workspace Preparation and Tensorflow Installation </h2>
 
 Create a workspace, for this create a directory `tensorflow_model`.
