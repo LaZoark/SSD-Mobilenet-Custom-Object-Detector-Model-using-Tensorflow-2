@@ -166,16 +166,16 @@ $wget http://download.tensorflow.org/models/object_detection/tf2/20200711/ssd_mo
 $tar -xvzf ssd_mobilenet_v2_320x320_coco17_tpu-8.tar.gz
 
 ```
-change the pipeline config accordingly. The changes I made in the config file is higlighted in bold
+change the pipeline config accordingly. (below is mine)
 
 ```
 model {
   ssd {
-    num_classes: **1**
+    num_classes: 3
     image_resizer {
       fixed_shape_resizer {
-        height: 300
-        width: 300
+        height: 320
+        width: 320
       }
     }
     feature_extractor {
@@ -306,7 +306,7 @@ model {
   }
 }
 train_config {
-  batch_size: **10**
+  batch_size: 10
   data_augmentation_options {
     random_horizontal_flip {
     }
@@ -320,8 +320,8 @@ train_config {
     momentum_optimizer {
       learning_rate {
         cosine_decay_learning_rate {
-          learning_rate_base: 0.800000011920929
-          total_steps: 50000
+          learning_rate_base: 0.4
+          total_steps: 20000
           warmup_learning_rate: 0.13333000242710114
           warmup_steps: 2000
         }
@@ -330,19 +330,19 @@ train_config {
     }
     use_moving_average: false
   }
-  fine_tune_checkpoint: **"ssd_mobilenet_v2_320x320_coco17_tpu-8/checkpoint/ckpt-0"**
+  fine_tune_checkpoint: "ssd_mobilenet_v2_320x320_coco17_tpu-8/checkpoint/ckpt-0"
   num_steps: 50000
   startup_delay_steps: 0.0
   replicas_to_aggregate: 8
   max_number_of_boxes: 100
   unpad_groundtruth_tensors: false
-  fine_tune_checkpoint_type: **"detection"**
+  fine_tune_checkpoint_type: "detection"
   fine_tune_checkpoint_version: V2
 }
 train_input_reader {
-  label_map_path: **"training/object-detection.pbxt"**
+  label_map_path: "training/object-detection.pbxt"
   tf_record_input_reader {
-    input_path: **"data/train.record"**
+    input_path: "data/train.record"
   }
 }
 eval_config {
@@ -350,13 +350,14 @@ eval_config {
   use_moving_averages: false
 }
 eval_input_reader {
-  label_map_path: **"training/object-detection.pbxt"**
+  label_map_path: "training/object-detection.pbxt"
   shuffle: false
   num_epochs: 1
   tf_record_input_reader {
-    input_path: **"data/test.record"**
+    input_path: "data/test.record"
   }
 }
+
 
 ```
 
@@ -426,3 +427,27 @@ $ jupyter notebook
 Run the object_detection_tutorial.ipynb file. Make changes accordingly if you are using other directory structure.
 
 <img src="mobile_detected.png"/>
+
+
+## Trouble Shouting
+1. `ImportError: libGL.so.1: cannot open shared object file: No such file or directory`
+
+try:
+```
+apt update  
+apt install libgl1-mesa-glx
+```
+2. `ModuleNotFoundError: No module named 'gin'`
+try:
+```
+pip install gin_config
+```
+3. `ModuleNotFoundError: No module named 'tensorflow_addons'`
+try:
+```
+pip install tensorflow-addons==0.12.1
+```
+4. To delete checkpoint
+```
+chmod 777 trained-checkpoint/*
+```
