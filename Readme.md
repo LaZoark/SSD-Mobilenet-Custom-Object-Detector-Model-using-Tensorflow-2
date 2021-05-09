@@ -88,10 +88,13 @@ Make sure to store the xml file and images in same directory for traning and tes
 
 create directory data in workspace (tensorflow_model/data) and from workspace home folder run the xml-to-csv.py script
 
+:::    info
 ```
-$mkdir data
-$python xml-to-csv.python
+mkdir data
+python xml-to-csv.py
 ```
+:::
+
 
 This will create test_labels.csv and train_lables.csv in `tensorflow/data` directory. Please verify the images path mention in the csv files are correct and absolute path is mentioned.
 
@@ -397,13 +400,12 @@ $python model_main_tf2.py --pipeline_config_path=ssd_mobilenet_v2_320x320_coco17
 
 ```
 
-<h2> Export the model </h2>
+## Export the model
 
 create directory `tensorflow_model/exported-model`
 
 ```
 $ mkdir tensorflow_model/exported-model
-
 ```
 
 
@@ -412,6 +414,13 @@ Run the below command to export your model in `tensorflow_model/exported-model d
 ```!
 $python exporter_main_v2.py --input_type image_tensor --pipeline_config_path ./ssd_mobilenet_v2_320x320_coco17_tpu-8/pipeline.config --trained_checkpoint_dir ./trained-checkpoint --output_directory exported-model/mobile-model
 
+```
+or to `.tflite`
+```
+python export_tflite_graph_tf2.py \
+    --pipeline_config_path ssd_mobilenet_v2_320x320_coco17_tpu-8/pipeline.config \
+    --trained_checkpoint_dir trained-checkpoint \
+    --output_directory exported-model
 ```
 
 <h2> Test your model </h2>
