@@ -1,6 +1,6 @@
 # Create custom object detector SSD Mobilenet Model using Tensorflow 2
 
-Here, we will create SSD-MobileNet-V2 model for smart phone deteaction. We are going to use tensorflow-gpu 2.2 for this. I am using python version 3.7.7.
+Here, we will create SSD-MobileNet-V2 model for smart phone deteaction. We are going to use tensorflow-gpu 2.4 for this. I am using python version 3.7.7.
 
 https://github.com/tensorflow/addons
 
@@ -115,12 +115,11 @@ Copy `models/research/official` and `models/research/object_detection` from `ten
 ```
 cp -r models/research/official .
 cp -r models/research/object_detection   .
-
 ```
 
 Generate the record file required for pipeline configuration
 
-```!
+```bash
 python "/home/b0742006/tensorflow_model/generate_tfrecord.py" --csv_input="/home/b0742006/tensorflow_model/data/train_labels.csv" --output_path="/home/b0742006/tensorflow_model/data/train.record"
 
 python "/home/b0742006/tensorflow_model/generate_tfrecord.py" --csv_input="/home/b0742006/tensorflow_model/data/test_labels.csv" --output_path="/home/b0742006/tensorflow_model/data/test.record"
@@ -412,7 +411,7 @@ $ mkdir tensorflow_model/exported-model
 Run the below command to export your model in `tensorflow_model/exported-model directory`
 
 ```!
-$python exporter_main_v2.py --input_type image_tensor --pipeline_config_path ./ssd_mobilenet_v2_320x320_coco17_tpu-8/pipeline.config --trained_checkpoint_dir ./trained-checkpoint --output_directory exported-model/mobile-model
+python exporter_main_v2.py --input_type image_tensor --pipeline_config_path ./ssd_mobilenet_v2_320x320_coco17_tpu-8/pipeline.config --trained_checkpoint_dir ./trained-checkpoint --output_directory exported-model/mobile-model
 
 ```
 or to `.tflite`
@@ -459,4 +458,8 @@ pip install tensorflow-addons==0.12.1
 4. To delete checkpoint
 ```
 chmod 777 trained-checkpoint/*
+```
+or
+```
+rm -r mobile-model
 ```
