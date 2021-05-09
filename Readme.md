@@ -463,3 +463,7 @@ or
 ```
 rm -r mobile-model
 ```
+
+```
+rm -r /storage/trained-checkpoint/*
+```
