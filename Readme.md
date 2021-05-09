@@ -40,6 +40,9 @@ pip install pillow
 pip install lxml
 pip install jupyter
 pip install matplotlib
+pip install lvis
+pip install 
+
 
 ```
 
