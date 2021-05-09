@@ -3,14 +3,14 @@
 Here, we will create SSD-MobileNet-V2 model for smart phone deteaction. We are going to use tensorflow-gpu 2.2 for this. I am using python version 3.7.7.
 
 https://github.com/tensorflow/addons
-<h2> Workspace Preparation and Tensorflow Installation </h2>
+
+## Workspace Preparation and Tensorflow Installation 
 
 Create a workspace, for this create a directory `tensorflow_model`.
 $mkdir tensorflow_model
 
 ```
 $cd tensorflow_model
-
 ```
 
 Create virtual environment for workspace. 
@@ -18,7 +18,6 @@ Create virtual environment for workspace.
 ```
 $python3 -m venv env
 $source env/bin/activate
-
 ```
 
 Upgrade your pip. pip version must be greate than version 19.0
@@ -30,8 +29,7 @@ pip install --upgrade pip
 Installling tensorflow
 
 ```
-pip install tensorflow-gpu==2.2
-
+pip install tensorflow-gpu==2.4
 ```
 Installing few other related libraries and dependencies
 
@@ -42,8 +40,6 @@ pip install jupyter
 pip install matplotlib
 pip install lvis
 pip install 
-
-
 ```
 
 
@@ -56,7 +52,6 @@ Create directory `images` and  `images/train` , `images/test`
 $mkdir tensorflow_model/images
 $mkdir tensorflow_model/images/train
 $mkdir tensorflow_model/images/test
-
 ```
 
 Upload training images and test images to `images/training` and `images/test` respectively
@@ -70,7 +65,6 @@ Clone labelImg repository
 ```
 $git clone https://github.com/tzutalin/labelImg.git
 $cd labelImg
-
 ```
 
 Install the dependencies required for labelImg
@@ -78,14 +72,12 @@ Install the dependencies required for labelImg
 ```
 $apt-get install pyqt5-dev-tools
 $pip install -r requirements/requirements-linux-python3.txt
-
 ```
 
 run the labelImg
 
 ```
 python labelImg.py
-
 ```
 
 **For detail usages of lableImg please refer to its documentation.**
@@ -99,7 +91,6 @@ create directory data in workspace (tensorflow_model/data) and from workspace ho
 ```
 $mkdir data
 $python xml-to-csv.python
-
 ```
 
 This will create test_labels.csv and train_lables.csv in `tensorflow/data` directory. Please verify the images path mention in the csv files are correct and absolute path is mentioned.
@@ -111,10 +102,9 @@ clone tensorflow models repository in the workspace `tensorflow_model` and insta
 ```
 $ git clone https://github.com/tensorflow/models.git
 $ cd models/research
-$ protoc object_detection/protos/*.proto --python_out=.
-$ pip install tf_slim
-$ pip install pandas
-
+protoc object_detection/protos/*.proto --python_out=.
+pip install tf_slim
+pip install pandas
 ```
 
 Copy `models/research/official` and `models/research/object_detection` from `tensorflow_model/models` to workspace  home directory that is `tensorflow_model`
@@ -127,7 +117,7 @@ cp -r models/research/object_detection   .
 
 Generate the record file required for pipeline configuration
 
-```
+```!
 python "/home/b0742006/tensorflow_model/generate_tfrecord.py" --csv_input="/home/b0742006/tensorflow_model/data/train_labels.csv" --output_path="/home/b0742006/tensorflow_model/data/train.record"
 
 python "/home/b0742006/tensorflow_model/generate_tfrecord.py" --csv_input="/home/b0742006/tensorflow_model/data/test_labels.csv" --output_path="/home/b0742006/tensorflow_model/data/test.record"
@@ -171,7 +161,7 @@ exit from training directory to workspace home directory `tensorflow_model`
 
 Download the example model `ssd_mobilenet_v2_320x320_coco17_tpu-8.tar.gz` and extract in workspace home directory
 
-```
+```!
 $wget http://download.tensorflow.org/models/object_detection/tf2/20200711/ssd_mobilenet_v2_320x320_coco17_tpu-8.tar.gz
 $tar -xvzf ssd_mobilenet_v2_320x320_coco17_tpu-8.tar.gz
 
@@ -401,7 +391,7 @@ $mkdir tensorflow_model/trained-checkpoint
 
 Now train your model. This step will take sometime and it depends on how large your dataset. I have trained my model on around 100 images and it took around 1 hour.
 
-```
+```!
 $python model_main_tf2.py --pipeline_config_path=ssd_mobilenet_v2_320x320_coco17_tpu-8/pipeline.config --model_dir=trained-checkpoint --alsologtostderr --num_train_steps=50000 --sample_1_of_n_eval_examples=1 --num_eval_steps=1
 
 ```
@@ -418,7 +408,7 @@ $ mkdir tensorflow_model/exported-model
 
 Run the below command to export your model in `tensorflow_model/exported-model directory`
 
-```
+```!
 $python exporter_main_v2.py --input_type image_tensor --pipeline_config_path ./ssd_mobilenet_v2_320x320_coco17_tpu-8/pipeline.config --trained_checkpoint_dir ./trained-checkpoint --output_directory exported-model/mobile-model
 
 ```
