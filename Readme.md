@@ -437,7 +437,7 @@ Run the object_detection_tutorial.ipynb file. Make changes accordingly if you ar
 <img src="mobile_detected.png"/>
 
 
-## Trouble Shouting
+## Trouble Shooting
 1. `ImportError: libGL.so.1: cannot open shared object file: No such file or directory`
 
 try:
